@@ -1,5 +1,3 @@
-'use strict';
-
 var ws = new WebSocket('ws://localhost:3000/');
 
 $(function () {
@@ -13,7 +11,8 @@ $(function () {
     return false;
   });
   ws.onmessage = function(msg){
-    var returnObject = JSON.parse(msg.data);
+      var returnObject = JSON.parse(msg.data);
+      console.log(returnObject);
     $('#messages').append($('<li>')).append($('<span id="clientId">').text(returnObject.id)).append($('<span id="clientMessage">').text(returnObject.data));
   };
   ws.onerror = function(err){
