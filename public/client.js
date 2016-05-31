@@ -1,3 +1,4 @@
+// TODO: localhost部分を現在のドメインのホスト名へ変更する
 var ws = new WebSocket('ws://localhost:3000/');
 
 $(function () {

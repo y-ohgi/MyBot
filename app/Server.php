@@ -13,6 +13,7 @@ use \Ratchet\MessageComponentInterface;
 class Chat implements MessageComponentInterface
 {
     private $clients;
+    private $todos = array();
 
     public function __construct()
     {
@@ -48,14 +49,73 @@ class Chat implements MessageComponentInterface
             // bot へ対する "命令ではなかった" 場合
             //  => そのままブロードキャスト配信
             foreach ($this->clients as $client) {
-                $client->send(json_encode(['data' => $message]));
+                $from->send(json_encode(['data' => $message]));
             }
             return;
         }
 
+        // XXX: とりあえずベタ書き、その後まともに実装
         if($str[1] === "ping"){
             $from->send(json_encode(['data' => "bot ping"]));
             $from->send(json_encode(['data' => "pong"]));
+        }else if($str[1] === "todo"){
+            if($str[2] === "add"){
+                $from->send(json_encode(['data' => $message]));
+                
+                if(!isset($str[3])){
+                    return;
+                }
+                $tmp = array(
+                    "title" => $str[3]
+                );
+                if(isset($str[4])){
+                    $tmp["desc"] = $str[4];
+                }
+                
+                array_push($this->todos, $tmp);
+                
+                $from->send(json_encode(['data' => "todo added"]));
+            }else if($str[2] === "delete"){
+                if(!$str[3]){
+                    return;
+                }
+
+                $delflg = false;
+                $todos = $this->todos;
+                for($i=0; $i< count($this->todos); $i++){
+                    if($this->todos[$i]["title"] == $str[3]){
+                        unset($todos[$i]);
+                        $from->send(json_encode(['data' => "todo deleting..."]));
+                        $delflg = true;
+                    }
+                }
+                if($delflg){
+                    $this->todos = array_values($todos);
+
+                    $from->send(json_encode(['data' => "todo deleted"]));
+                }
+                return;
+                
+            }else if($str[2] === "list"){
+                $tmp = "";
+                $from->send(json_encode(['data' => "bot todo list"]));
+
+                if(empty($this->todos) || count($this->todos) === 0){
+                    $from->send(json_encode(['data' => "todo empty"]));
+                    return;
+                }
+                for($i=0; $i< count($this->todos); $i++){
+                    $tmp .= $this->todos[$i]["title"];
+                    if(isset($this->todos[$i]["desc"])){
+                        $tmp .= " ". $this->todos[$i]["desc"];
+                    }
+                    if($i !== count($this->todos) -1){
+                        $tmp .= "\n";
+                    }
+                }
+                
+                $from->send(json_encode(['data' => $tmp]));
+            }
         }
 
         // bot へ対する "命令であった" 場合
