@@ -42,67 +42,38 @@ class Chat implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $from, $message)
     {
-        // send message out to all connected clients
-        foreach ($this->clients as $client) {
-            $client->send(json_encode(['data' => $message]));
-        }
-
+        // bot へ対する命令かの判定
         $str = explode(" ", $message);
-        if($str[0] === "bot" && count($str) === 3){ // && length
-            $data = array(
-                "command" => $str[1],
-                "data" => $str[2]
-            );
-
-            var_dump($data);
-            $bot = new Bot($data);
-            $bot->generateHash();
-            $bot->hash;
-            
+        if($str[0] !== "bot"){
+            // bot へ対する "命令ではなかった" 場合
+            //  => そのままブロードキャスト配信
             foreach ($this->clients as $client) {
-                $client->send(json_encode(['data' => $bot->hash]));
+                $client->send(json_encode(['data' => $message]));
             }
-
-            var_dump($bot->hash);
+            return;
         }
-        
+
+        if($str[1] === "ping"){
+            $from->send(json_encode(['data' => "bot ping"]));
+            $from->send(json_encode(['data' => "pong"]));
+        }
+
+        // bot へ対する "命令であった" 場合
+        //  => 命令のメソッドを取得しに行く
+        /***
+            > bot $命令 $引数0 $引数1
+            // ファクトリ？or アブストラクト
+            $command = new Command($cmd);
+            $command = new 
+            // method_exists ( mixed $コマンドクラス , string $命令 );
+            
+            
+            
+            
+         ***/
         
     }
 }
-    /* protected $clients = array(); */
-
-    /* public function __construct(){ */
-    /*     $this->clients = new \SplObjectStorage; */
-    /* } */
-    
-    /* public function onOpen(ConnectionInterface $conn) */
-    /* { */
-    /*     // Nothing to do for echo server */
-    /*     $this->clients->attach($conn); */
-    /* } */
-
-    /* public function onMessage(ConnectionInterface $from, $message) */
-    /* { */
-    /*     $from->send(json_encode(['data' => $message])); // Do Echo */
-
-    /*     foreach ($this->clients as $client) { */
-    /*         if ($from !== $client) { */
-    /*             $client->send($message); */
-    /*         } */
-    /*     } */
-    /* } */
-
-    /* public function onClose(ConnectionInterface $conn) */
-    /* { */
-    /*     // Nothing to do for echo server */
-    /*     $this->clients->detach($conn); */
-    /* } */
-
-    /* public function onError(ConnectionInterface $conn, \Exception $e) */
-    /* { */
-    /*     $conn->close(); */
-    /* } */
-/* } */
 
 /**
  * Do NOT remove this code.
