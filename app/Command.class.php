@@ -3,6 +3,9 @@
 namespace Sprint;
 
 abstract class Command{
+    protected $result;
     abstract public function excute($message);
-    abstract public function getResult();
+    public function getResult(){
+        return $this->result;
+    }
 }

@@ -5,7 +5,6 @@ namespace Sprint;
 use \PDO;
 
 class TodoCommand extends Command {
-    private $result = "";
     private $todos = array();
 
     public function excute($message){
@@ -104,8 +103,8 @@ class TodoCommand extends Command {
 
     }
 
-    public function getResult(){
-        //parent::getResult();
-        return $this->result;
-    }
+    /* public function getResult(){ */
+    /*     parent::getResult(); */
+    /*     //return $this->result; */
+    /* } */
 }
