@@ -24,13 +24,16 @@ class Chat implements MessageComponentInterface
         // initialize clients
         $this->clients = new \SplObjectStorage;
         
+        $sql = 'TRUNCATE todos'; // test用
+        $stmt = Dbh::get()->prepare($sql);
+        $stmt->execute();
         /* $sql = "INSERT INTO todos(`title`, `body`) VALUES(:title, :body)"; */
         /* $stmt = Dbh::get()->prepare($sql); */
         /* $stmt->bindValue(':title', "title", PDO::PARAM_STR); */
         /* $stmt->bindValue(':body', "the description", PDO::PARAM_STR); */
         /* $stmt->execute(); */
-        $todocom = new TodoCommand();
-        $todocom->excute();
+        /* $todocom = new TodoCommand(); */
+        /* $todocom->excute(); */
 
     }
 
@@ -67,67 +70,21 @@ class Chat implements MessageComponentInterface
             return;
         }
 
-        // XXX: とりあえずベタ書き、その後まともに実装
         $from->send(json_encode(['data' => $message]));
 
+
+        try{
+            $cl = 'Sprint\\'. ucfirst($str[1]) . 'Command'; // セキュリティ的にやばそうだし、 存在しない値を入れられたらエラー泊のでcatch
+            $command = new $cl();//$cl();
+            $command->excute($message);
+            $result = $command->getResult();
         
-        if($str[1] === "ping"){
-            $from->send(json_encode(['data' => "pong"]));
-        }else if($str[1] === "todo"){
-            if($str[2] === "add"){
-                if(!isset($str[3])){
-                    return;
-                }
-                $tmp = array(
-                    "title" => $str[3]
-                );
-                if(isset($str[4])){
-                    $tmp["desc"] = $str[4];
-                }
-                
-                array_push($this->todos, $tmp);
-                
-                $from->send(json_encode(['data' => "todo added"]));
-            }else if($str[2] === "delete"){
-                if(!$str[3]){
-                    return;
-                }
-
-                $delflg = false;
-                $todos = $this->todos;
-                for($i=0; $i< count($this->todos); $i++){
-                    if($this->todos[$i]["title"] == $str[3]){
-                        unset($todos[$i]);
-                        $delflg = true;
-                    }
-                }
-                if($delflg){
-                    $this->todos = array_values($todos);
-
-                    $from->send(json_encode(['data' => "todo deleted"]));
-                }
-                return;
-                
-            }else if($str[2] === "list"){
-                $tmp = "";
-
-                if(empty($this->todos) || count($this->todos) === 0){
-                    $from->send(json_encode(['data' => "todo empty"]));
-                    return;
-                }
-                for($i=0; $i< count($this->todos); $i++){
-                    $tmp .= $this->todos[$i]["title"];
-                    if(isset($this->todos[$i]["desc"])){
-                        $tmp .= " ". $this->todos[$i]["desc"];
-                    }
-                    if($i !== count($this->todos) -1){
-                        $tmp .= "\n";
-                    }
-                }
-                
-                $from->send(json_encode(['data' => $tmp]));
-            }
+            $from->send(json_encode(['data' => $result]));
+        }catch(Exception $e){
+            $from->send(json_encode(['data' => 'error']));
         }
+        
+        
 
         // bot へ対する "命令であった" 場合
         //  => 命令のメソッドを取得しに行く
