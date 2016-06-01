@@ -2,6 +2,7 @@
 namespace Sprint;
 require 'autoload.php';
 
+
 # Servers
 use \Ratchet\Http\HttpServer;
 use \Ratchet\Server\IoServer;
@@ -10,6 +11,9 @@ use \Ratchet\WebSocket\WsServer;
 use \Ratchet\ConnectionInterface;
 use \Ratchet\MessageComponentInterface;
 
+use \PDO;
+
+
 class Chat implements MessageComponentInterface
 {
     private $clients;
@@ -17,8 +21,17 @@ class Chat implements MessageComponentInterface
 
     public function __construct()
     {
-        // initialize clients storage
+        // initialize clients
         $this->clients = new \SplObjectStorage;
+        
+        /* $sql = "INSERT INTO todos(`title`, `body`) VALUES(:title, :body)"; */
+        /* $stmt = Dbh::get()->prepare($sql); */
+        /* $stmt->bindValue(':title', "title", PDO::PARAM_STR); */
+        /* $stmt->bindValue(':body', "the description", PDO::PARAM_STR); */
+        /* $stmt->execute(); */
+        $todocom = new TodoCommand();
+        $todocom->excute();
+
     }
 
     public function onOpen(ConnectionInterface $conn)
@@ -55,13 +68,13 @@ class Chat implements MessageComponentInterface
         }
 
         // XXX: とりあえずベタ書き、その後まともに実装
+        $from->send(json_encode(['data' => $message]));
+
+        
         if($str[1] === "ping"){
-            $from->send(json_encode(['data' => "bot ping"]));
             $from->send(json_encode(['data' => "pong"]));
         }else if($str[1] === "todo"){
             if($str[2] === "add"){
-                $from->send(json_encode(['data' => $message]));
-                
                 if(!isset($str[3])){
                     return;
                 }
@@ -85,7 +98,6 @@ class Chat implements MessageComponentInterface
                 for($i=0; $i< count($this->todos); $i++){
                     if($this->todos[$i]["title"] == $str[3]){
                         unset($todos[$i]);
-                        $from->send(json_encode(['data' => "todo deleting..."]));
                         $delflg = true;
                     }
                 }
@@ -98,7 +110,6 @@ class Chat implements MessageComponentInterface
                 
             }else if($str[2] === "list"){
                 $tmp = "";
-                $from->send(json_encode(['data' => "bot todo list"]));
 
                 if(empty($this->todos) || count($this->todos) === 0){
                     $from->send(json_encode(['data' => "todo empty"]));
