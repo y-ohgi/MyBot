@@ -1,5 +1,6 @@
 // TODO: localhost部分を現在のドメインのホスト名へ変更する
-var ws = new WebSocket('ws://localhost:3000/');
+var hostname = window.location.hostname;
+var ws = new WebSocket('ws://'+hostname+'3000/');
 
 $(function () {
   $('form').submit(function(){
