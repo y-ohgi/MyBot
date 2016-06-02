@@ -81,13 +81,13 @@ class Chat implements MessageComponentInterface
             }
             $command = new $cl(); // コンストラクタにmessageぶち込もうかしら
             $command->setToken($token);
-            $command->excute($message);
+            $command->execute($message);
             $result = $command->getResult();
             
             echo "______________________________________\n";
             var_dump($message);
             var_dump(json_encode($result));
-            echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
+            echo "--------------------------------------\n";
             
             $from->send(json_encode($result));
         }catch(Exception $e){

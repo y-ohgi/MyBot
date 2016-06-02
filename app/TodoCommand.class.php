@@ -7,7 +7,7 @@ use \PDO;
 class TodoCommand extends Command {
     private $todos = array();
 
-    public function excute($message){
+    public function execute($message){
         $str = explode(" ", $message);
 
         if($str[2] === "add"){

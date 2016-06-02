@@ -3,7 +3,7 @@
 namespace Sprint;
 
 class PingCommand extends Command {
-    public function excute($message){
+    public function execute($message){
         $this->addResult("pong");
     }
 }

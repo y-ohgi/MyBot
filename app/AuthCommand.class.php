@@ -8,7 +8,7 @@ use \PDO;
 class AuthCommand extends Command {
     use Auth;
 
-    public function excute($message){
+    public function execute($message){
         $str = explode(" ", $message);
 
         if($str[2] === "signup"){

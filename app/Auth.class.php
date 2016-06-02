@@ -36,7 +36,6 @@ trait Auth{
     
     protected function isAuth(){
         $user = $this->getUserByToken();
-        var_dump($user);
         if($user === false || $user['token'] !== $this->token){
             return false;
         }

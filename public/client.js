@@ -1,7 +1,9 @@
-// TODO: localhost部分を現在のドメインのホスト名へ変更する
+// XXX: どうにかする、したい
 var hostname = window.location.hostname;
 var ws = new WebSocket('ws://'+hostname+':3000/');
 var token = "";
+var flgSending = false;
+
 
 $(function () {
     $('form#chat').submit(function(){
@@ -21,12 +23,14 @@ $(function () {
 	return false;
     });
 
-    $("form#file").submit(function(){
-	console.log("changed");
+    $("form#file").submit(function(e){
+	$("#blackout").show();
+	
 	var fd = new FormData();
 	if ($("input[name='image']").val()!== '') {
 	    fd.append( "file", $("input[name='image']").prop("files")[0] );
 	}
+	
 	var postData = {
 	    type : "POST",
 	    dataType : "text",
@@ -36,9 +40,13 @@ $(function () {
 	};
 	$.ajax(
 	    "./upload.php", postData
-	).done(function( text ){
-	    console.log(text);
-	    $("input[name='image']").val("");
+	).done(function(imgname){
+	    $("input[type='file']").val("");
+
+	    // DRY
+	    var value = "bot present " + imgname + "@" + token;
+	    console.log(value);
+	    ws.send(value);
 	}).error(function(err){
 	    alert(err);
 	});
@@ -51,6 +59,8 @@ $(function () {
 	console.log(returnObject);
 	token = returnObject.token || token;
 	$('#messages').append($('<li>')).append($('<span id="clientId">').text(returnObject.id)).append($('<span id="clientMessage">').text(returnObject.data));
+	
+	$("#blackout").hide();
     };
     ws.onerror = function(err){
 	console.log("err", err);

@@ -13,3 +13,22 @@ form.file {
     position: fixed;
     bottom: 45px;
 }
+
+.blackout {
+    display: none;
+            
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    background: rgba(0, 0, 0, .5);
+}
+.blackout h3 {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    color:white;
+}

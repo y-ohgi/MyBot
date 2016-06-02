@@ -5,15 +5,18 @@ namespace Sprint;
 class WeatherCommand extends Command {
     use Auth;
     
-    public function excute($message){
+    public function execute($message){
         $str = explode(" ", $message);
 
         if($this->isAuth()){
+            $user = $this->getUserByToken();
+            $user_id = $user['id'];
+            $bot = new Bot($user_id);
+
+            $favper = $bot->getFavorability();
+            
             $this->addResult("晴れじゃね");
         }else{
-            var_dump($message);
-            var_dump($this->token);
-
             $this->addErrorInResult("要認証");
         }
     }

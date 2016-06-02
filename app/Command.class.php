@@ -6,7 +6,7 @@ abstract class Command{
     protected $result = array();
     protected $token = array();
     
-    abstract public function excute($message);
+    abstract public function execute($message);
     
     public function getResult(){
         // SELECT body FROM bot_type_words WHERE (id = $this->result[error] || $this->result['token']) && bot_id = BOT::getType();
