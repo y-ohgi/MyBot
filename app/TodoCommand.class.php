@@ -24,14 +24,14 @@ class TodoCommand extends Command {
             return;
         }
     }
-    public function add($message){
+    
+    private function add($message){
         $str = explode(" ", $message);
         
         if(!isset($str[3])){
             return;
         }
 
-        // array_push($this->todos, $tmp);
         $sql = 'INSERT INTO todos(title, body) values(:title, :body)';
         $stmt = Dbh::get()->prepare($sql);
         $stmt->bindValue(':title', $str[3], PDO::PARAM_STR);
@@ -45,7 +45,7 @@ class TodoCommand extends Command {
         $this->result = "todo added";
     }
 
-    public function delete($message){
+    private function delete($message){
         $str = explode(" ", $message);
         
         if(!$str[3]){
@@ -63,7 +63,7 @@ class TodoCommand extends Command {
         return;
     }
 
-    public function getList($message){
+    private function getList($message){
         $res = "";
         $rowsnum = 0;
         
@@ -94,8 +94,4 @@ class TodoCommand extends Command {
 
     }
 
-    /* public function getResult(){ */
-    /*     parent::getResult(); */
-    /*     //return $this->result; */
-    /* } */
 }

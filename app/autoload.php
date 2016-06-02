@@ -9,8 +9,11 @@ spl_autoload_register(function ($class) {
             'sprint\\bot' => '/Bot.php',
             'sprint\\dbh' => '/Dbh.php',
             'sprint\\command' => '/Command.class.php',
+            'sprint\\auth' => '/Auth.class.php',
             'sprint\\pingcommand' => '/PingCommand.class.php',
             'sprint\\todocommand' => '/TodoCommand.class.php',
+            'sprint\\authcommand' => '/AuthCommand.class.php',
+            'sprint\\weathercommand' => '/WeatherCommand.class.php',
         ];
         
     }
