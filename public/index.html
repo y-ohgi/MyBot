@@ -6,9 +6,15 @@
   </head>
   <body>
     <ul id="messages"></ul>
-    <form action="">
+    <form action="" method="post" id="file" class="file" style="background:white;">
+	<input type="file" name="image">
+	<input type="submit" name="upload" value="アップロード" style="">
+    </form>
+    <form action="" id="chat" class="chat">
       <input id="m" autocomplete="off"/><button type="submit">Send</button>
     </form>
+
+    
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="client.js"></script>
   </body>
