@@ -56,7 +56,6 @@ class Chat implements MessageComponentInterface
             foreach ($this->clients as $client) {
                 $client->send(json_encode(['data' => $message]));
             }
-            echo "=================================";
             return;
         }
 
@@ -64,15 +63,22 @@ class Chat implements MessageComponentInterface
 
 
         try{
+            if(count($str) === 1){
+                throw new Exception('コマンドを入力して下さい');
+            }
+            
             // そのまま突っ込むのは セキュリティ的にやばそう?
             $cl = 'Sprint\\'. ucfirst($str[1]) . 'Command';
+            if(class_exists($cl) === false){
+                throw new Exception('そんなコマンドはない');
+            }
             $command = new $cl();
             $command->excute($message);
             $result = $command->getResult();
         
             $from->send(json_encode(['data' => $result]));
         }catch(Exception $e){
-            $from->send(json_encode(['error' => 'error']));
+            $from->send(json_encode(['error' => $e->getMessage()]));
 
             if($str[0] !== "bot"){
                 foreach ($this->clients as $client) {

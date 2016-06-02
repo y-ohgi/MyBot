@@ -57,15 +57,6 @@ class TodoCommand extends Command {
         $stmt = Dbh::get()->prepare($sql);
         $stmt->bindValue(':title', $str[3], PDO::PARAM_STR);
         $stmt->execute();
-
-        /* $todos = $this->todos; */
-        /* for($i=0; $i< count($this->todos); $i++){ */
-        /*     if($this->todos[$i]["title"] == $str[3]){ */
-        /*         unset($todos[$i]); */
-        /*     } */
-        /* } */
-        /* $this->todos = array_values($todos); */
-
         
         $this->result = "todo deleted";
         
