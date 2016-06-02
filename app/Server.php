@@ -49,8 +49,15 @@ class Chat implements MessageComponentInterface
         $conn->close();
     }
 
-    public function onMessage(ConnectionInterface $from, $message)
+    public function onMessage(ConnectionInterface $from, $msg)
     {
+        // XXX: token情報は headerに入れたかった。。。 instant
+        $parsemsg = explode("@", $msg);
+        $message = $parsemsg[0];
+        $token = "";
+        if(array_key_exists(1, $parsemsg)){
+            $token = $parsemsg[1];
+        }
         $str = explode(" ", $message);
         if($str[0] !== "bot"){
             foreach ($this->clients as $client) {
@@ -72,11 +79,17 @@ class Chat implements MessageComponentInterface
             if(class_exists($cl) === false){
                 throw new Exception('そんなコマンドはない');
             }
-            $command = new $cl();
+            $command = new $cl(); // コンストラクタにmessageぶち込もうかしら
+            $command->setToken($token);
             $command->excute($message);
             $result = $command->getResult();
-        
-            $from->send(json_encode(['data' => $result]));
+            
+            echo "______________________________________\n";
+            var_dump($message);
+            var_dump(json_encode($result));
+            echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
+            
+            $from->send(json_encode($result));
         }catch(Exception $e){
             $from->send(json_encode(['error' => $e->getMessage()]));
 
@@ -86,11 +99,12 @@ class Chat implements MessageComponentInterface
                 }
                 return;
             }
-
         }
     }
     
 }
+
+date_default_timezone_set('Asia/Tokyo');
 
 $docroot = __DIR__ . '/../public';
 $deamon = popen("php -S 0.0.0.0:9000 --docroot {$docroot}", "r");

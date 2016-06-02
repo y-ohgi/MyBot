@@ -7,18 +7,16 @@ class WeatherCommand extends Command {
     
     public function excute($message){
         $str = explode(" ", $message);
-        
-        if(count($str) === 2){
-            $this->result = "要認証";
-            return;
-        }else if($this->isAuth($str[2]) === false){
-            $this->result = "要認証";
-            return;
+
+        if($this->isAuth()){
+            $this->addResult("晴れじゃね");
+        }else{
+            var_dump($message);
+            var_dump($this->token);
+
+            $this->addErrorInResult("要認証");
         }
-
-        $this->result = "OK";
     }
-
     
     
 }

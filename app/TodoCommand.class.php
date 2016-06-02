@@ -20,7 +20,7 @@ class TodoCommand extends Command {
             $this->getList($message); // list は予約語である
             return;
         }else{
-            $this->result = "そんなコマンドは無い";
+            $this->addResult("そんなコマンドは無い");
             return;
         }
     }
@@ -42,7 +42,7 @@ class TodoCommand extends Command {
         }
         $stmt->execute();
             
-        $this->result = "todo added";
+        $this->addResult("todo added");
     }
 
     private function delete($message){
@@ -50,7 +50,7 @@ class TodoCommand extends Command {
         
         if(!$str[3]){
             return;
-            $this->result = "何を削除しろと";
+            $this->addResult("何を削除しろと");
         }
         
         $sql = 'DELETE FROM todos WHERE title = :title';
@@ -58,7 +58,7 @@ class TodoCommand extends Command {
         $stmt->bindValue(':title', $str[3], PDO::PARAM_STR);
         $stmt->execute();
         
-        $this->result = "todo deleted";
+        $this->addResult("todo deleted");
         
         return;
     }
@@ -74,7 +74,7 @@ class TodoCommand extends Command {
         $rowsnum = count($rows);
         
         if($rowsnum === 0){
-            $this->result = "todo empty";
+            $this->addResult("todo empty");
 
             return;
         }
@@ -88,8 +88,7 @@ class TodoCommand extends Command {
                 $res .= "\n";
             }
         }
-
-        $this->result = $res;
+        $this->addResult($res);
         return;
 
     }
