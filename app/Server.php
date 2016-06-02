@@ -12,7 +12,7 @@ use \Ratchet\ConnectionInterface;
 use \Ratchet\MessageComponentInterface;
 
 use \PDO;
-
+use \Exception;
 
 class Chat implements MessageComponentInterface
 {
@@ -54,8 +54,9 @@ class Chat implements MessageComponentInterface
         $str = explode(" ", $message);
         if($str[0] !== "bot"){
             foreach ($this->clients as $client) {
-                $from->send(json_encode(['data' => $message]));
+                $client->send(json_encode(['data' => $message]));
             }
+            echo "=================================";
             return;
         }
 
@@ -71,7 +72,15 @@ class Chat implements MessageComponentInterface
         
             $from->send(json_encode(['data' => $result]));
         }catch(Exception $e){
-            $from->send(json_encode(['data' => 'error']));
+            $from->send(json_encode(['error' => 'error']));
+
+            if($str[0] !== "bot"){
+                foreach ($this->clients as $client) {
+                    $from->send(json_encode(['data' => $message]));
+                }
+                return;
+            }
+
         }
     }
     
