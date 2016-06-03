@@ -22,6 +22,11 @@ class HelpCommand extends Command {
 　- 天気を返す
 * bot status:
 　- botの情報確認
+* bot type list:
+　- botの変更可能な属性一覧を取得
+* bot type change 属性名:
+　- botの属性を変更します
+　- listで取得した日本語属性名
 TEXT;
                 
             $this->addWordInResult($help);
