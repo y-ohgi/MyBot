@@ -72,7 +72,7 @@ abstract class Command{
                 $this->addWordInResult($word);
                 $this->result["error"] = $res;
             }catch(Exception $e){
-                var_dump($e->getMessage);
+                //var_dump($e->getMessage);
             }
         }else{
             $this->result["error"] = $res;
