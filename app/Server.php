@@ -1,6 +1,7 @@
 <?php
 namespace Sprint;
 require 'autoload.php';
+require 'definelist.php';
 
 
 # Servers
@@ -61,7 +62,7 @@ class Chat implements MessageComponentInterface
         $str = explode(" ", $message);
         if($str[0] !== "bot"){
             foreach ($this->clients as $client) {
-                $client->send(json_encode(['data' => $message]));
+                $client->send(json_encode(['chat' => $message]));
             }
             return;
         }
@@ -71,13 +72,13 @@ class Chat implements MessageComponentInterface
 
         try{
             if(count($str) === 1){
-                throw new Exception('コマンドを入力して下さい');
+                throw new Exception(400);
             }
             
             // そのまま突っ込むのは セキュリティ的にやばそう?
             $cl = 'Sprint\\'. ucfirst($str[1]) . 'Command';
             if(class_exists($cl) === false){
-                throw new Exception('そんなコマンドはない');
+                throw new Exception(404);
             }
             $command = new $cl(); // コンストラクタにmessageぶち込もうかしら
             $command->setToken($token);
@@ -91,8 +92,23 @@ class Chat implements MessageComponentInterface
             
             $from->send(json_encode($result));
         }catch(Exception $e){
-            $from->send(json_encode(['error' => $e->getMessage()]));
+            $errorcode = intval($e->getMessage());
+            $res = array(
+                "error" => $errorcode,
+                "word" => ""
+            );
+                
+            $sql = "SELECT body FROM (SELECT wm.id as id, type_id, bot_state_id, body FROM bot_word_master as wm INNER JOIN bot_state_master as sm ON wm.bot_state_id = sm.id WHERE bot_state_id = :bot_state_id) as bot_word INNER JOIN bot ON bot_word.type_id = bot.type_id LIMIT 1";
+            $stmt = Dbh::get()->prepare($sql);
+            $stmt->bindValue(':bot_state_id', $errorcode, PDO::PARAM_INT);
+            $stmt->execute();
+                
+            $res['word'] = $stmt->fetchColumn();
+            
+            // $from->send(json_encode(['error' => $e->getMessage()]));
+            $from->send(json_encode($res));
 
+            // catche　先でブロードキャストをするよ！
             if($str[0] !== "bot"){
                 foreach ($this->clients as $client) {
                     $from->send(json_encode(['data' => $message]));

@@ -45,12 +45,11 @@ class AuthCommand extends Command {
         }
 
         try{
-            $sql = 'INSERT INTO users(username, password, token, created_at) values(:username, :password, :token, :created_at)';
+            $sql = 'INSERT INTO users(username, password, token) values(:username, :password, :token)';
             $stmt = Dbh::get()->prepare($sql);
             $stmt->bindValue(':username', $username, PDO::PARAM_STR);
             $stmt->bindValue(':password', password_hash($username. $password, PASSWORD_DEFAULT), PDO::PARAM_STR);
             $stmt->bindValue(':token', $token, PDO::PARAM_STR);
-            $stmt->bindValue(':created_at', date('Y-m-d h:m:s'), PDO::PARAM_STR);
             $stmt->execute();
 
             $this->addTokenInResult($token);
@@ -73,7 +72,8 @@ class AuthCommand extends Command {
         $password = $str[4];
         $user = $this->getUser($username);
         $passhash = $username. $password;
-        
+        var_dump($user);
+
         if(!$user || !password_verify($passhash, $user['password'])){
             $this->addErrorInResult("usernameかpssswordが間違ってる");
             return;

@@ -2,21 +2,26 @@
 
 namespace Sprint;
 
+use \PDO;
+use \Exception;
+
 class TalkCommand extends Command {
     use Auth;
     
     public function execute($message){
-        $str = explode(" ", $message);
+        $bot = new Bot($this->user_id);
 
         if(!$this->isAuth()){
-            $this->addErrorInResult("要認証");
+            $this->addErrorInResult(401);
+            $word = $bot->getWord(401);
+            $this->addWordInResult($word);
+            return;
         }
-
-        $this->addResult("はわわー");
-
         
-        // TODO: 現在の好感度を持ってくる
-        // ランダムでセリフを持ってくる
-        // SELECT body FROM type_words WHERE 
+        $word = $bot->getWord();
+        $favper = $bot->addFavorability();
+        
+        
+        $this->addWordInResult($word);
     }
 }

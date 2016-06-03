@@ -8,13 +8,7 @@ class WeatherCommand extends Command {
     public function execute($message){
         $str = explode(" ", $message);
 
-        if($this->isAuth()){
-            $user = $this->getUserByToken();
-            $user_id = $user['id'];
-            $bot = new Bot($user_id);
-
-            $favper = $bot->getFavorability();
-            
+        if($this->isOwner()){
             $this->addResult("晴れじゃね");
         }else{
             $this->addErrorInResult("要認証");

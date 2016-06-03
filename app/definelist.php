@@ -1,7 +1,21 @@
 <?php
 
 //=== botの属性 id ===
+// デフォルト 属性
 define('TYPE_DEFAULT', 1);
+// クール 属性
+define('TYPE_COOL', 2);
+// ツンデレ 属性
+define('TYPE_TUNDERE', 3);
+// 妹 属性
+define('TYPE_SISTER', 4);
+
+//=== botの好感度ランク ===
+define('FAVO_RANK_ZERO', 0);
+define('FAVO_RANK_LOW', 50);
+define('FAVO_RANK_MIDDLE', 75);
+define('FAVO_RANK_HIGHT', 99);
+define('FAVO_RANK_OWNER', 100);
 
 
 //=== botが喋るセリフid ===
@@ -18,8 +32,8 @@ define('WORD_FAVO_LOW', 11);
 define('WORD_FAVO_MIDDLE', 12);
 // 好感度 76%〜99%
 define('WORD_FAVO_HIGHT', 13);
-// 好感度 100%
-define('WORD_FAVO_MAX', 14);
+// 好感度 100%〜
+define('WORD_FAVO_OWNER', 14);
 
 // 天気情報
 // ex. 「今日の天気は#{$weather}です」
@@ -35,7 +49,7 @@ define('WORD_WEATHER_RAINY', 102);
 define('WORD_SUCCESS', 200);
 // 作成完了
 //  ex. 「#{$created}を作成しました」
-define('WORD_SUCCESS_CREATED');
+define('WORD_SUCCESS_CREATED', 201);
 
 // エラー： ユーザー入力エラー
 //  ex. 入力が間違っているようです

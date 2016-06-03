@@ -58,7 +58,17 @@ $(function () {
 	var returnObject = JSON.parse(msg.data);
 	console.log(returnObject);
 	token = returnObject.token || token;
-	$('#messages').append($('<li>')).append($('<span id="clientId">').text(returnObject.id)).append($('<span id="clientMessage">').text(returnObject.data));
+
+	if(returnObject.word){
+	    //$('#messages').append($('<li class="botword">')).append($('<span id="clientId">').text("ぼっと子： ")).append($('<span id="clientMessage">').text(returnObject.word));
+	    $('#messages').append($('<li class="botword"><span id="clientId">ぼっと子：</span><span id="clientMessage">'+ returnObject.word + '</span></li>'));
+	}else if(returnObject.chat){
+	    console.log("fafa");
+	    var id = returnObject.id?returnObject.id:"ななし";
+	    $('#messages').append('<li><span id="clientId">'+id+':</span><span id="clientMessage">'+ returnObject.chat + '</span></li>');
+	}
+
+	// $('#messages').append($('<li>')).append($('<span id="clientId">').text(returnObject.id)).append($('<span id="clientMessage">').text(returnObject.data));
 	
 	$("#blackout").hide();
     };

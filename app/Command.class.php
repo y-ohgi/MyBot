@@ -33,13 +33,27 @@ abstract class Command{
         }
     }
 
+    // botのセリフ用
+    public function addWordInResult($res){
+        if(empty($res)){
+            return;
+        }else{
+            $this->result["word"] = $res;
+        }
+    }
+    
     // error用
-    public function addErrorInResult($res){
+    public function addErrorInResult($res/* , $botflg = false */){
         if(empty($res)){
             return;
         }else{
             $this->result["error"] = $res;
         }
+
+        /* if($botflg){ */
+        /*     if(!is_int($res))$res = 400; */
+        /*     $this->addWordInResult($res); */
+        /* } */
     }
 
     // XXX: ここで token を設定するのどうにかしたい => 認証に関係あるところに入れたい

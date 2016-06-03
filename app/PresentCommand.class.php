@@ -20,23 +20,24 @@ class PresentCommand extends Command{
             $bot = new Bot($user_id);
         }else{
             $this->addErrorInResult('用認証');
+            return false;
         }
 
         $res = array();
         $image = $str[2];
         $labels = API::GCV($image);
 
-        // 現在の属性 の好みかどうか
         foreach($labels as $label){
             array_push($res, $label['description']);
         }
         $res = implode(',', $res);
-
+        
+        //TODO: 現在の属性 の好みかどうか を判定して、増加%を決定する
+        //  現在固定で 20%
         $bot->addFavorability(20);
 
         $this->addResult($res);
         $this->addResult(array('bot' => $bot->getState()));
     }
-    
-    
+        
 }
