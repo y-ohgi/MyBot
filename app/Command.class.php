@@ -2,6 +2,7 @@
 
 namespace Sprint;
 
+// XXX: 一通りaddじゃなくてsetだよなぁ、と
 abstract class Command{
     protected $result = array();
     protected $token = array();

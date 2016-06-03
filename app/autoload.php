@@ -19,6 +19,8 @@ spl_autoload_register(function ($class) {
             'sprint\\weathercommand' => '/WeatherCommand.class.php',
             'sprint\\presentcommand' => '/PresentCommand.class.php',
             'sprint\\burontcommand' => '/BurontCommand.class.php',
+            'sprint\\helpcommand' => '/HelpCommand.class.php',
+            'sprint\\statuscommand' => '/StatusCommand.class.php',
         ];
         
     }

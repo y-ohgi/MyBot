@@ -35,16 +35,28 @@ class Bot {
         $res = array();
         
         $res['type_id'] = $this->bot['type_id'];
+        $res['typename'] = $this->getTypeName($this->bot['type_id']);
         $res['bot_state_id'] = $this->getFavoRankId();
         $res['favorability'] = $this->getFavorability();
         
         return $res;
+    }
+
+    public function getTypeName($type_id){
+        $sql = "SELECT typename FROM bot_type_master WHERE id = :type_id";
+        $stmt = Dbh::get()->prepare($sql);
+        $stmt->bindValue(':type_id', $type_id, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->fetchColumn();
     }
     
     // bot の好感度を取得
     public function getFavorability(){
         $bot_id = $this->bot['id'];
         $bot_favo_id = 0;
+        echo "user_id: ";
+        var_dump($this->user_id);
 
         try{
             $sql = "SELECT bot_id, percent FROM bot_favorabilites WHERE user_id = :user_id ORDER BY id DESC LIMIT 1";
@@ -154,18 +166,19 @@ class Bot {
 
     // botのセリフの取得
     // 引数は bot_state_master id
-    public function getWord($state_id = null, $word = ""){
-        var_dump($state_id);
-        
-        $state_id = $state_id? $state_id : $this->getFavoRankId();
+    public function getWord($stateid = null, $word = ""){
+        $state_id = $stateid? $stateid : $this->getFavoRankId();
         $word = $word? $word : ""; // "マスター";
-        
-        $sql = "SELECT body FROM bot_word_master WHERE type_id = :type_id AND bot_state_id = :bot_state_id";
+
+        $sql = "SELECT body FROM bot_word_master WHERE type_id = :type_id AND bot_state_id = :bot_state_id ORDER BY RAND() LIMIT 1";
         $stmt = Dbh::get()->prepare($sql);
         $stmt->bindValue(':type_id', $this->bot['type_id'], PDO::PARAM_INT);
         $stmt->bindValue(':bot_state_id', $state_id, PDO::PARAM_INT);
         $stmt->execute();
+        $body = $stmt->fetchColumn();
 
-        return $stmt->fetchColumn();
+
+        $body = str_replace('#{$word}', $word, $body);
+        return $body;
     }
 }

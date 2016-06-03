@@ -7,7 +7,14 @@ form.chat button { width: 9%; background: rgb(130, 224, 255); border: none; padd
 #messages { list-style-type: none; margin: 0; padding: 0; }
 #messages li { padding: 5px 10px; }
 #clientId {display:inline-block;margin-right:10px; margin-left:10px;}
-#clientMessage {display:inline-block}
+#clientMessage {
+    display:inline-block;
+    vertical-align: middle;
+
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 5px;
+}
 
 form.file {
     position: fixed;

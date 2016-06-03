@@ -52,8 +52,14 @@ class AuthCommand extends Command {
             $stmt->bindValue(':token', $token, PDO::PARAM_STR);
             $stmt->execute();
 
+            $user_id = Dbh::get()->lastInsertId('id');
+
+            $bot = new Bot($user_id);
+            $word = $bot->getWord(201, 'ユーザー');
+            
+
             $this->addTokenInResult($token);
-            $this->addResult("登録完了");
+            $this->addWordInResult($word);
         }catch(Exception $e){
             $this->addErrorInResult("error");
             return;
@@ -71,16 +77,20 @@ class AuthCommand extends Command {
         $username = $str[3];
         $password = $str[4];
         $user = $this->getUser($username);
+        $user_id = $user['id'];
         $passhash = $username. $password;
-        var_dump($user);
 
         if(!$user || !password_verify($passhash, $user['password'])){
             $this->addErrorInResult("usernameかpssswordが間違ってる");
             return;
         }else{
             $token = $this->updateToken($username);
+            
+            $bot = new Bot($user_id);
+            $word = $bot->getWord(200);
+            
             $this->addTokenInResult($token);
-            $this->addResult("ログインできた");
+            $this->addWordInResult($word);
             return;
         }
     }
