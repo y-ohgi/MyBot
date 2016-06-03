@@ -41,6 +41,14 @@ form.file {
 }
 
 .botword {
-    color: dodgerblue;
+    color: slateblue;
     font-weight: bold;
+}
+
+#botword_default, #botword_デフォルト{
+    color: olivedrab;
+}
+
+#botword_cool, #botword_クーデレ{
+    color: dodgerblue;
 }

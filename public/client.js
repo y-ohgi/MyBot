@@ -60,9 +60,8 @@ $(function () {
 	token = returnObject.token || token;
 
 	if(returnObject.word){
-	    //$('#messages').append($('<li class="botword">')).append($('<span id="clientId">').text("ぼっと子： ")).append($('<span id="clientMessage">').text(returnObject.word));
 	    var word = nl2br(returnObject.word);
-	    $('#messages').prepend($('<li class="botword"><span id="clientId">ぼっと子：</span><span id="clientMessage">'+ word + '</span></li>'));
+	    $('#messages').prepend($('<li class="botword" id="botword_'+ returnObject.type +'" ><span id="clientId">ぼっと子：</span><span id="clientMessage">'+ word + '</span></li>'));
 	}else if(returnObject.chat){
 	    console.log("fafa");
 	    var id = returnObject.id?returnObject.id:"ななし";

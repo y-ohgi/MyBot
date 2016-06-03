@@ -69,7 +69,6 @@ class Chat implements MessageComponentInterface
 
         $from->send(json_encode(['data' => $message]));
 
-
         try{
             if(count($str) === 1 || empty(@$str[1])){
                 throw new Exception(404);
