@@ -71,10 +71,10 @@ class Chat implements MessageComponentInterface
 
 
         try{
-            if(count($str) === 1){
+            if(count($str) === 1 || empty(@$str[1])){
                 throw new Exception(404);
             }
-            
+
             // そのまま突っ込むのは セキュリティ的にやばそう?
             $cl = 'Sprint\\'. ucfirst($str[1]) . 'Command';
             if(class_exists($cl) === false){

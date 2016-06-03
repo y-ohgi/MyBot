@@ -21,7 +21,7 @@ class AuthCommand extends Command {
             $this->signout();
             return;
         }else{
-            $this->addErrorInResult("そんなコマンドは無い");
+            $this->addErrorInResult(404, true);
             return;
         }
     }
@@ -30,7 +30,7 @@ class AuthCommand extends Command {
     private function signup($message){
         $str = explode(" ", $message);
         if(count($str) !== 5){
-            $this->addErrorInResult("ちゃんとしたコマンドが欲しい");
+            $this->addErrorInResult(400, true);
             return;
         }
 
@@ -40,7 +40,7 @@ class AuthCommand extends Command {
         $user = $this->getUser($username);
         
         if($user){
-            $this->addErrorInResult("既に存在するユーザー");
+            $this->addErrorInResult(409, true);
             return;
         }
 
@@ -56,12 +56,11 @@ class AuthCommand extends Command {
 
             $bot = new Bot($user_id);
             $word = $bot->getWord(201, 'ユーザー');
-            
 
             $this->addTokenInResult($token);
             $this->addWordInResult($word);
         }catch(Exception $e){
-            $this->addErrorInResult("error");
+            $this->addErrorInResult(500, true);
             return;
         }
 
@@ -70,7 +69,7 @@ class AuthCommand extends Command {
     private function signin($message){
         $str = explode(" ", $message);
         if(count($str) !== 5){
-            $this->addErrorInResult("ちゃんとしたコマンドを打って下さい");
+            $this->addErrorInResult(400, true);
             return;
         }
 
@@ -81,7 +80,7 @@ class AuthCommand extends Command {
         $passhash = $username. $password;
 
         if(!$user || !password_verify($passhash, $user['password'])){
-            $this->addErrorInResult("usernameかpssswordが間違ってる");
+            $this->addErrorInResult(400, true);
             return;
         }else{
             $token = $this->updateToken($username);

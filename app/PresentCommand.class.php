@@ -23,21 +23,41 @@ class PresentCommand extends Command{
             return false;
         }
 
-        $res = array();
+        $res = "";
+        $word = "";
+        $percent = 0;
+        $percentdefault = 20;
+        $boundlabel = array();
         $image = $str[2];
         $labels = API::GCV($image);
 
+        $sql = "SELECT percent FROM present_match_master WHERE label IN (:lab0, :lab1, :lab2) LIMIT 1";
+        $stmt = Dbh::get()->prepare($sql);
+        $num = 0;
         foreach($labels as $label){
-            array_push($res, $label['description']);
+            $stmt->bindValue(':lab'.$num, $label['description'], PDO::PARAM_STR);
+            array_push($boundlabel, $label['description']);
+            $num++;
         }
-        $res = implode(',', $res);
+        $stmt->execute();
+        $percent = (int)$stmt->fetchColumn();
         
-        //TODO: 現在の属性 の好みかどうか を判定して、増加%を決定する
-        //  現在固定で 20%
-        $bot->addFavorability(20);
+        $res = implode(',', $boundlabel);
 
+        if($percent > 0){
+            $word = $bot->getWord(WORD_THANKS_V2);
+        }else if($percent < 0){
+            $word = $bot->getWord(WORD_SORRY);
+        }else{
+            $percent = $percentdefault;
+            $word = $bot->getWord(WORD_THANKS);
+        }
+        
+        $bot->addFavorability($percent);
+
+        $this->addWordInResult($word);
+        $this->addResult(array('favo' => $percent));
         $this->addResult($res);
-        $this->addResult(array('bot' => $bot->getState()));
     }
         
 }

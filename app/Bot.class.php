@@ -170,7 +170,12 @@ class Bot {
         $state_id = $stateid? $stateid : $this->getFavoRankId();
         $word = $word? $word : ""; // "マスター";
 
-        $sql = "SELECT body FROM bot_word_master WHERE type_id = :type_id AND bot_state_id = :bot_state_id ORDER BY RAND() LIMIT 1";
+        if($stateid === null){
+            $sql = "SELECT body FROM bot_word_master WHERE type_id = :type_id AND (bot_state_id = :bot_state_id OR bot_state_id = 1 OR bot_state_id = 20 OR bot_state_id = 21) ORDER BY RAND();";
+        }else{
+            $sql = "SELECT body FROM bot_word_master WHERE type_id = :type_id AND bot_state_id = :bot_state_id ORDER BY RAND() LIMIT 1";
+        }
+
         $stmt = Dbh::get()->prepare($sql);
         $stmt->bindValue(':type_id', $this->bot['type_id'], PDO::PARAM_INT);
         $stmt->bindValue(':bot_state_id', $state_id, PDO::PARAM_INT);

@@ -77,6 +77,10 @@ CREATE TABLE bot_word_master (
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 1, 'どうかしましたか？');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 1, 'ご命令を');
 
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 2, 'ありがとうございます');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 3, '本当に嬉しいですっ！');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 4, 'ごめんなさい・・・');
+
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 10, '初めまして、でしょうか');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 11, 'またお会いしましたね');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 11, 'ご機嫌いかがですか');
@@ -85,6 +89,12 @@ INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 13, 'お会�
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 13, '明日も来てくれますよね？');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 14, '何でもしますよ、#{$word}さん');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 14, '今はあなたのbotです、#{$word}さん');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 14, '#{$word}さん、どこかにでかけたいです');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 14, '#{$word}さん...');
+
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 20, '犬はかわいいですよね');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 20, 'アニメが見たいです・・・');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 21, '・・・実は虫が嫌いなんです');
 
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 100, '今日の天気は#{$word}です');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 101, '晴れです、でかけにいきませんか？');
@@ -100,31 +110,44 @@ INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 404, 'コマ�
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 409, '入力された値は既に存在するようです');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(1, 500, 'サーバーのエラーのようです');
 
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 1, 'くーる：どうかしましたか？');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 1, 'くーる：ご命令を');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 1, '・・・？');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 1, '・・・');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 1, 'Zzz');
 
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 10, 'くーる：初めまして、でしょうか');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 11, 'くーる：またお会いしましたね');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 11, 'くーる：ご機嫌いかがですか');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 12, 'くーる：お会いできて嬉しいです');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 13, 'くーる：お会いしたかったです');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 13, 'くーる：明日も来てくれますよね？');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 14, 'くーる：何でもしますよ、#{$word}さん');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 14, 'くーる：今はあなたのbotです、#{$word}さん');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 2, '・・・ありがと？');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 3, 'えっと・・・その・・・ありがとう・・・!!');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 4, '・・・ごめん');
+
+
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 10, '・・・誰？');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 11, '君、知ってる');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 11, '何？');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 11, '・・・Zzz');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 12, '・・・やあ');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 12, '眠い・・・');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 13, 'やあ');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 13, '・・・明日も、会える？');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 14, '・・・#{$word}');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 14, '〜♪');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 14, '〜♪');
+
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 20, '・・・猫、かわいい');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 20, '・・・魚が見たい');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 21, '・・・虫はイヤ');
 
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 100, 'くーる：今日の天気は#{$word}です');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 101, 'くーる：晴れです、でかけにいきませんか？');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 102, 'くーる：雨です、傘をお忘れなく');
 INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 109, 'くーる：天気を取得できませんでした');
 
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 200, 'くーる：リクエストが成功しました');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 201, 'くーる：#{$word}を作成しました');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 200, '・・・コマンドが成功した');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 201, '・・・#{$word}、作った');
 
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 400, 'くーる：入力が間違っているようです');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 401, 'くーる：認証を行って下さい');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 404, 'くーる：コマンドが見つかりません');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 409, 'くーる：入力された値は既に存在するようです');
-INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 500, 'くーる：サーバーのエラーのようです');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 400, '・・・入力、間違ってる');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 401, '・・・認証が必要');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 404, '・・・そのコマンドは知らない');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 409, '・・・その値はもう在る');
+INSERT INTO bot_word_master(type_id, bot_state_id, body) VALUES(2, 500, '・・・サーバーのエラー');
 
 
 
@@ -199,3 +222,17 @@ INSERT INTO buront_maxims(body) VALUES('「無視する人がぜいいんだろ�
 INSERT INTO buront_maxims(body) VALUES('「見事な仕事だと関心はするがどこもおかしくはない」');
 INSERT INTO buront_maxims(body) VALUES('「ほう、経験が生きたな」');
 
+# プレゼントの相性
+CREATE TABLE present_match_master(
+       id int(11) not null auto_increment primary key,
+       type_id int(11) not null, # 属性マスタ
+       label varchar(11) not null,
+       percent int(11) not null DEFAULT 20
+);
+INSERT INTO present_match_master(label, type_id, percent) VALUES('dog', 1, 30);
+INSERT INTO present_match_master(label, type_id, percent) VALUES('anime', 1, 30);
+INSERT INTO present_match_master(label, type_id, percent) VALUES('insect', 1, -10);
+
+INSERT INTO present_match_master(label, type_id, percent) VALUES('cat', 2, 30);
+INSERT INTO present_match_master(label, type_id, percent) VALUES('fish', 2, 30);
+INSERT INTO present_match_master(label, type_id, percent) VALUES('insect', 2, -10);

@@ -25,7 +25,19 @@ define('FAVO_RANK_OWNER', 100);
 define('WORD_SOMETHING', 1);
 // お礼
 //  ex. 「ありがとうございます」
-define('WORD_THANKS', 1);
+define('WORD_THANKS', 2);
+// お礼 ver2
+//  ex. 「本当に嬉しいですっ！」
+define('WORD_THANKS_V2', 3);
+// 謝る
+//  ex. 「ごめんなさい・・・」
+define('WORD_SORRY', 4);
+// 怒る
+//  ex. 「このー」
+define('WORD_ANGRY', 5);
+// 驚く
+//  ex. 「驚きです！」
+define('WORD_SURPRISE', 6);
 
 // 好感度 0%
 define('WORD_FAVO_ZERO', 10);
@@ -37,6 +49,12 @@ define('WORD_FAVO_MIDDLE', 12);
 define('WORD_FAVO_HIGHT', 13);
 // 好感度 100%〜
 define('WORD_FAVO_OWNER', 14);
+
+// 好きなもの
+define('WORD_PRESENT_FAVO', 20);
+// 嫌いなもの
+define('WORD_PRESENT_HATE', 21);
+
 
 // 天気情報
 // ex. 「今日の天気は#{$weather}です」
