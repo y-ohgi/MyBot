@@ -21,6 +21,7 @@ spl_autoload_register(function ($class) {
             'sprint\\burontcommand' => '/BurontCommand.class.php',
             'sprint\\helpcommand' => '/HelpCommand.class.php',
             'sprint\\statuscommand' => '/StatusCommand.class.php',
+            'sprint\\typecommand' => '/TypeCommand.class.php',
         ];
         
     }

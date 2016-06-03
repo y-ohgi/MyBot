@@ -60,7 +60,7 @@ CREATE TABLE bot_type_master (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 # ======とりあえずな初期データ========
 INSERT INTO bot_type_master(id, typename) VALUES(1, 'デフォルト');
-INSERT INTO bot_type_master(id, typename) VALUES(2, 'クール');
+INSERT INTO bot_type_master(id, typename) VALUES(2, 'クーデレ');
 -- INSERT INTO bot_type_master(id, typename) VALUES(3, 'ツンデレ');
 -- INSERT INTO bot_type_master(id, typename) VALUES(4, '妹');
 

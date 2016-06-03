@@ -23,6 +23,9 @@ define('FAVO_RANK_OWNER', 100);
 //  ex. 「ご命令を」
 //  ex. 「どうかしましたか？」
 define('WORD_SOMETHING', 1);
+// お礼
+//  ex. 「ありがとうございます」
+define('WORD_THANKS', 1);
 
 // 好感度 0%
 define('WORD_FAVO_ZERO', 10);

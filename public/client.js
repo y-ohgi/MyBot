@@ -61,8 +61,8 @@ $(function () {
 
 	if(returnObject.word){
 	    //$('#messages').append($('<li class="botword">')).append($('<span id="clientId">').text("ぼっと子： ")).append($('<span id="clientMessage">').text(returnObject.word));
-	    var word = returnObject.word;
-	    $('#messages').prepend($('<li class="botword"><span id="clientId">ぼっと子：</span><span id="clientMessage">'+ nl2br(word) + '</span></li>'));
+	    var word = nl2br(returnObject.word);
+	    $('#messages').prepend($('<li class="botword"><span id="clientId">ぼっと子：</span><span id="clientMessage">'+ word + '</span></li>'));
 	}else if(returnObject.chat){
 	    console.log("fafa");
 	    var id = returnObject.id?returnObject.id:"ななし";
@@ -82,5 +82,5 @@ $(function () {
 });
 
 function nl2br(str){
-    return str.replace(/[\n\r]/g, "<br />");
+    return str.replace(/\n/g, "<br />");
 }

@@ -13,6 +13,7 @@ class TalkCommand extends Command {
             $this->addErrorInResult(401);
             $word = $bot->getWord(401);
             $this->addWordInResult($word);
+            
             return;
         }
 
