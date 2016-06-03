@@ -72,7 +72,7 @@ class Chat implements MessageComponentInterface
 
         try{
             if(count($str) === 1){
-                throw new Exception(400);
+                throw new Exception(404);
             }
             
             // そのまま突っ込むのは セキュリティ的にやばそう?
@@ -97,7 +97,8 @@ class Chat implements MessageComponentInterface
                 "error" => $errorcode,
                 "word" => ""
             );
-                
+
+            // TODO: bot classをなおして これをどうにかする
             $sql = "SELECT body FROM (SELECT wm.id as id, type_id, bot_state_id, body FROM bot_word_master as wm INNER JOIN bot_state_master as sm ON wm.bot_state_id = sm.id WHERE bot_state_id = :bot_state_id) as bot_word INNER JOIN bot ON bot_word.type_id = bot.type_id LIMIT 1";
             $stmt = Dbh::get()->prepare($sql);
             $stmt->bindValue(':bot_state_id', $errorcode, PDO::PARAM_INT);
